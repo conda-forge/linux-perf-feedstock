@@ -1,11 +1,11 @@
-About linux-perf
-================
+About linux-perf-feedstock
+==========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/linux-perf-feedstock/blob/main/LICENSE.txt)
 
 Home: https://www.kernel.org
 
 Package license: GPL-2.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/linux-perf-feedstock/blob/main/LICENSE.txt)
 
 Summary: Performance analysis tools for Linux
 
