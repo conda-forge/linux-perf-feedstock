@@ -1,5 +1,5 @@
 {% set name = "linux-perf" %}
-{% set version = "6.2.12" %}
+{% set version = "6.2.13" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://cdn.kernel.org/pub/linux/kernel/v{{ version.split(".")[0] }}.x/linux-{{ version }}.tar.xz
-  sha256: c7e146b52737adfa4c724bfa41bf4721c5ee3cf220c074fbc60eb3ea62b0ccc8
+  sha256: c7dded14e368834b18bb2ad64af65560d8bcb9d2d6597e0f6ef151fded01e577
 
 build:
   number: 0
