@@ -10,13 +10,13 @@ source:
   sha256: e0a9ad8692b2191cbd33db371a780a3fe375de90123a307ecd874c0860cd46e3
 
 build:
-  number: 2
+  number: 3
   skip: true  # [not linux]
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - sysroot_linux-64 2.17  # [linux64]
+    - {{ stdlib("c") }}
     - make
     - flex
     - bison
