@@ -35,6 +35,7 @@ requirements:
     - setuptools
   run:
     - python
+    - libnuma
 
 test:
   commands:
