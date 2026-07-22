@@ -1,0 +1,4 @@
+# perf >= 6.4 uses glibc APIs newer than the 2.17 default
+# (reallocarray, EM_RISCV, MAP_HUGE_SHIFT, ...)
+c_stdlib_version:   # [linux]
+  - "2.28"          # [linux]
