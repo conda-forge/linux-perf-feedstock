@@ -1,22 +1,25 @@
-{% set name = "linux-perf" %}
-{% set version = "6.3.10" %}
+schema_version: 1
+
+context:
+  name: linux-perf
+  version: "6.3.10"
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  url: https://cdn.kernel.org/pub/linux/kernel/v{{ version.split(".")[0] }}.x/linux-{{ version }}.tar.xz
+  url: https://cdn.kernel.org/pub/linux/kernel/v${{ version.split(".")[0] }}.x/linux-${{ version }}.tar.xz
   sha256: e0a9ad8692b2191cbd33db371a780a3fe375de90123a307ecd874c0860cd46e3
 
 build:
   number: 6
-  skip: true  # [not linux]
+  skip: not linux
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ stdlib("c") }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
     - make
     - flex
     - bison
@@ -37,12 +40,11 @@ requirements:
     - python
     - libnuma
 
-test:
-  commands:
-    - perf list
+tests:
+  - script:
+      - perf list
 
 about:
-  home: https://www.kernel.org
   summary: Performance analysis tools for Linux
   description: |
     Performance counters for Linux are a new kernel-based subsystem that
@@ -51,8 +53,10 @@ about:
     (software counters, tracepoints) as well.
   license: GPL-2.0-only
   license_file: LICENSES/preferred/GPL-2.0
-  doc_url: https://docs.kernel.org/
+  homepage: https://www.kernel.org
+  documentation: https://docs.kernel.org/
 
 extra:
   recipe-maintainers:
     - chrisburr
+
