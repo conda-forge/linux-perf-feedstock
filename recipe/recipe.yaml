@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: linux-perf
-  version: "6.3.10"
+  version: "7.1.4"
 
 package:
   name: ${{ name|lower }}
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://cdn.kernel.org/pub/linux/kernel/v${{ version.split(".")[0] }}.x/linux-${{ version }}.tar.xz
-  sha256: e0a9ad8692b2191cbd33db371a780a3fe375de90123a307ecd874c0860cd46e3
+  sha256: 1c63922a119675d38e3ae0f8f6ee07f15c41a786ab9ed66563749bb8c9a08e2e
 
 build:
-  number: 6
+  number: 0
   skip: not linux
 
 requirements:
