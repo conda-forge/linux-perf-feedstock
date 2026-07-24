@@ -1,0 +1,90 @@
+schema_version: 1
+
+context:
+  name: linux-perf
+  version: "7.1.4"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://cdn.kernel.org/pub/linux/kernel/v${{ (version | split("."))[0] }}.x/linux-${{ version }}.tar.xz
+  sha256: 1c63922a119675d38e3ae0f8f6ee07f15c41a786ab9ed66563749bb8c9a08e2e
+
+build:
+  number: 0
+  skip:
+    - not linux
+    - ppc64le
+  dynamic_linking:
+    overlinking_behavior: error
+    overdepending_behavior: error
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    # perf links libstdc++ for the C++ demangler
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib("c") }}
+    - make
+    - flex
+    - bison
+    - pkg-config
+  host:
+    - elfutils
+    # capstone provides the headers, libcapstone the lib and its run_exports
+    - capstone
+    - libcapstone
+    - libnuma
+    - libtraceevent
+    - slang
+    - liblzma-devel
+    - zlib
+    - zstd
+    - python
+    - setuptools
+  run:
+    - python
+    - libnuma
+
+tests:
+  - script:
+      - perf version --build-options
+      # any of these features silently flipping to OFF (as the TUI did for
+      # every historical build of this feedstock) should fail the test
+      - 'for f in libtraceevent libslang libcapstone libelf dwarf debuginfod libpython libnuma zlib lzma zstd bpf aio; do perf version --build-options | grep -E "$f: +\[ on" || { echo "feature $f is not enabled"; exit 1; }; done'
+      # enumerating events works without perf_event_open permissions
+      - 'perf list | grep -i "cpu-clock"'
+  - package_contents:
+      # strict: any packaged file not matched below fails the build
+      strict: true
+      bin:
+        - perf
+        - trace
+      include:
+        - perf/perf_dlfilter.h
+      files:
+        exists:
+          - bin/perf
+          - bin/trace
+          - etc/bash_completion.d/perf
+          - include/perf/perf_dlfilter.h
+          - libexec/perf-core/**
+          - share/doc/perf-tip/**
+
+about:
+  summary: Performance analysis tools for Linux
+  description: |
+    Performance counters for Linux are a new kernel-based subsystem that
+    provide a framework for all things performance analysis. It covers hardware
+    level (CPU/PMU, Performance Monitoring Unit) features and software features
+    (software counters, tracepoints) as well.
+  license: GPL-2.0-only
+  license_file: LICENSES/preferred/GPL-2.0
+  homepage: https://www.kernel.org
+  documentation: https://docs.kernel.org/
+
+extra:
+  recipe-maintainers:
+    - chrisburr

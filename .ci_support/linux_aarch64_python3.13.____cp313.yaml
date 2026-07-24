@@ -5,25 +5,21 @@ c_compiler_version:
 c_stdlib:
 - sysroot
 c_stdlib_version:
-- '2.17'
-cdt_name:
-- conda
+- '2.28'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
+cxx_compiler:
+- gxx
+cxx_compiler_version:
+- '14'
 docker_image:
-- quay.io/condaforge/linux-anvil-aarch64:alma9
+- quay.io/condaforge/linux-anvil-aarch64:alma10
 elfutils:
-- '0.192'
-libcap:
-- '2.76'
+- '0.194'
 liblzma_devel:
 - '5'
-libunwind:
-- '1.8'
-openssl:
-- '3'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -33,8 +29,8 @@ python:
 target_platform:
 - linux-aarch64
 zip_keys:
-- - python
-  - channel_sources
+- - c_compiler_version
+  - cxx_compiler_version
 zlib:
 - '1'
 zstd:
