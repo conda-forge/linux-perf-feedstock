@@ -13,7 +13,7 @@ source:
   sha256: 7d0e7ce14f98c43efe880cffbf354a59be45928fdf7170d7333c374ae91c0d83
 
 build:
-  number: 0
+  number: 1
   skip:
     - not linux
     - ppc64le
@@ -31,7 +31,12 @@ requirements:
     - flex
     - bison
     - pkg-config
+    # clang builds the BPF skeletons; openjdk supplies the JNI headers for jvmti
+    - clang
+    - openjdk
   host:
+    # header/pkg-config-only gate for BPF skeletons; perf never links libcrypto
+    - openssl
     - elfutils
     # capstone provides the headers, libcapstone the lib and its run_exports
     - capstone
@@ -48,6 +53,9 @@ requirements:
     - if: match(python, ">=3.14")
       then: libpython
     - setuptools
+  ignore_run_exports:
+    by_name:
+      - openssl
   run:
     - python
     - if: match(python, ">=3.14")
@@ -59,7 +67,7 @@ tests:
       - perf version --build-options
       # any of these features silently flipping to OFF (as the TUI did for
       # every historical build of this feedstock) should fail the test
-      - 'for f in libtraceevent libslang libcapstone libelf dwarf debuginfod libpython libnuma zlib lzma zstd bpf aio; do perf version --build-options | grep -E "$f: +\[ on" || { echo "feature $f is not enabled"; exit 1; }; done'
+      - 'for f in bpf_skeletons libtraceevent libslang libcapstone libelf dwarf debuginfod libpython libnuma zlib lzma zstd bpf aio; do perf version --build-options | grep -E "$f: +\[ on" || { echo "feature $f is not enabled"; exit 1; }; done'
       # enumerating events works without perf_event_open permissions
       - 'perf list | grep -i "cpu-clock"'
   - package_contents:
@@ -70,12 +78,15 @@ tests:
         - trace
       include:
         - perf/perf_dlfilter.h
+      lib:
+        - perf-jvmti
       files:
         exists:
           - bin/perf
           - bin/trace
           - etc/bash_completion.d/perf
           - include/perf/perf_dlfilter.h
+          - lib/libperf-jvmti.so
           - libexec/perf-core/**
           - share/doc/perf-tip/**
 
