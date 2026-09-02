@@ -48,10 +48,7 @@ requirements:
     - zlib
     - zstd
     - python
-    # CPython >= 3.14 ships libpython.so.1.0 in its own package rather than
-    # inside `python`; perf links it directly for its libpython support
-    - if: match(python, ">=3.14")
-      then: libpython
+    - libpython
     - setuptools
   ignore_run_exports:
     by_name:
