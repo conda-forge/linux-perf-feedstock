@@ -48,15 +48,18 @@ requirements:
     - zlib
     - zstd
     - python
-    - libpython
+    # `libpython` is unversioned and has no run_exports, so pin it to the
+    # variant's Python or the solver happily grabs a mismatched CPython
+    - libpython ${{ python }}
     - setuptools
   ignore_run_exports:
     by_name:
       - openssl
   run:
     - python
-    - if: match(python, ">=3.14")
-      then: libpython
+    # perf links libpython.so.1.0, which every CPython now ships in its own
+    # package rather than inside `python`
+    - libpython ${{ python }}
     - libnuma
 
 tests:
