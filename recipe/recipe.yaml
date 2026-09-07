@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: linux-perf
-  version: "7.2.3"
+  version: "7.2.4"
 
 package:
   name: ${{ name|lower }}
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://cdn.kernel.org/pub/linux/kernel/v${{ (version | split("."))[0] }}.x/linux-${{ version }}.tar.xz
-  sha256: 8ba259e8e7b13ec6ef0941c8a39ad90b24bd4a4d6c0010ba6bafb794550ecd03
+  sha256: 01710ee01737dac492f1bae52becd057e08d20d11589089aa06accff415c28dd
 
 build:
   number: 0
