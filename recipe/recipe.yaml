@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: linux-perf
-  version: "7.2.7"
+  version: "7.2.8"
 
 package:
   name: ${{ name|lower }}
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://cdn.kernel.org/pub/linux/kernel/v${{ (version | split("."))[0] }}.x/linux-${{ version }}.tar.xz
-  sha256: 4ac34c47db2540ffb2713943f8d891ff1702e0ba6934525a493b7d1cad43145a
+  sha256: 12e8d5a973d1ad7c5a5c69882e4022b131ed715db7003fdcd760ddf8c3e51941
 
 build:
-  number: 1
+  number: 0
   skip:
     - not linux
     - ppc64le
